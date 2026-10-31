@@ -1,0 +1,322 @@
+
+@use 'mixins' as m;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.setup-container {
+  width: 100%;
+  max-width: var(--form-width);
+  margin-inline: auto;
+}
+
+// Header
+.setup-header {
+  text-align: center;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0 0 5px;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+}
+
+.game-logo {
+  display: grid;
+  grid-template-columns: repeat(2, 24px);
+  gap: 2px;
+  width: fit-content;
+  margin: 0 auto 12px;
+  padding: 7px;
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+
+  span {
+    @include m.flex-center;
+
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-primary);
+
+    &:nth-child(2),
+    &:nth-child(3) {
+      color: var(--color-secondary);
+    }
+  }
+}
+
+// Card
+.setup-card {
+  @include m.card;
+
+  padding: 32px;
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+}
+
+.card-description {
+  margin: 0 0 28px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+// Form
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 24px;
+
+  > label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  > input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(101, 69, 191, 0.1);
+    }
+  }
+}
+
+.error-message {
+  color: var(--color-error);
+  font-size: 12px;
+}
+
+// Symbol Selection
+.symbol-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.symbol-option {
+  position: relative;
+  width: 100%;
+  min-height: 125px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  appearance: none;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+
+  &.selected {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+
+    .radio-indicator {
+      border-color: var(--color-primary);
+
+      &::after {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &:focus-visible,
+  &:has(input:focus-visible) {
+    @include m.focus-ring;
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+}
+
+.symbol {
+  font-size: 39px;
+  font-weight: 800;
+  line-height: 1;
+
+  &-x {
+    color: var(--color-primary);
+  }
+
+  &-o {
+    color: var(--color-secondary);
+  }
+}
+
+.symbol-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.radio-indicator {
+  width: 17px;
+  height: 17px;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+
+  @include m.flex-center;
+
+  &::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    transform: scale(0);
+    transition: transform var(--transition-fast);
+  }
+}
+
+.helper-text {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+// Game Count Selection
+.game-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.game-option {
+  position: relative;
+  height: 48px;
+
+  @include m.flex-center;
+
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+
+  &.selected {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+    box-shadow: var(--shadow-primary);
+  }
+
+  &:has(input:focus-visible) {
+    @include m.focus-ring;
+  }
+}
+
+// Start Button
+.start-button {
+  width: 100%;
+  height: 52px;
+  margin-top: 8px;
+
+  @include m.flex-center;
+  gap: 12px;
+
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast);
+
+  &:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    @include m.focus-ring;
+  }
+}
+
+.play-icon {
+  font-size: 13px;
+}
+
+// Responsive
+@include m.mobile {
+  .setup-header {
+    h1 {
+      font-size: 29px;
+    }
+  }
+
+  .setup-card {
+    padding: 24px 20px;
+  }
+}
