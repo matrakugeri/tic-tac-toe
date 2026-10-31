@@ -1,0 +1,15 @@
+.main-layout {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+}
+
+@media (max-width: 520px) {
+  .main-layout {
+    padding: 24px 16px;
+    align-items: flex-start;
+  }
+}
