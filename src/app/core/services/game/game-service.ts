@@ -1,5 +1,5 @@
 import {  Service } from '@angular/core';
-import { PlayerSymbol } from "../models/game-model"
+import { PlayerSymbol } from "../../models/game-model"
 
 @Service()
 export class GameService {

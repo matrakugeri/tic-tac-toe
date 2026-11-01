@@ -1,9 +1,9 @@
 import { Service, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { GameState, GameStatus, Player, PlayerSymbol, TournamentLength } from '../models/game-model';
+import { GameState, GameStatus, Player, PlayerSymbol, TournamentLength } from '../../models/game-model';
 import { GameService } from './game-service';
-import { StorageService } from "../services/storage-service";
+import { StorageService } from "../storage/storage-service";
 
 const initialState: GameState = {
   player1: { name: '', symbol: 'X' },
@@ -90,8 +90,20 @@ export class GameStateService {
         board,
         winningLine: winResult.line,
         scores,
-        status: isTournamentOver ? GameStatus.TOURNAMENT_COMPLETE : GameStatus.ROUND_OVER,
+        status: GameStatus.ROUND_OVER,
       });
+
+      if (isTournamentOver) {
+        setTimeout(() => {
+          const latestState = this.stateSubject.getValue();
+          if (latestState.status === GameStatus.ROUND_OVER) {
+            this.updateState({
+              ...latestState,
+              status: GameStatus.TOURNAMENT_COMPLETE,
+            });
+          }
+        }, 1800); 
+      }
       return;
     }
 
@@ -106,8 +118,20 @@ export class GameStateService {
         ...currentState,
         board,
         scores,
-        status: isTournamentOver ? GameStatus.TOURNAMENT_COMPLETE : GameStatus.ROUND_OVER,
+        status: GameStatus.ROUND_OVER,
       });
+
+      if (isTournamentOver) {
+        setTimeout(() => {
+          const latestState = this.stateSubject.getValue();
+          if (latestState.status === GameStatus.ROUND_OVER) {
+            this.updateState({
+              ...latestState,
+              status: GameStatus.TOURNAMENT_COMPLETE,
+            });
+          }
+        }, 1800);
+      }
       return;
     }
 
