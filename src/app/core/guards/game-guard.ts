@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { map, take } from 'rxjs';
-import { GameStateService } from '../services/game-state';
+import { GameStateService } from '../services/game/game-state';
 import { GameStatus } from '../models/game-model';
 
 export const gameGuard: CanActivateFn = (route, state) => {
