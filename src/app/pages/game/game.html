@@ -1,1 +1,77 @@
-<p>game works!</p>
+<div class="game-page">
+  @if (state$ | async; as state) {
+    <div class="game-container">
+      
+      <header class="game-header">
+        <div class="tournament-info">
+          <h1>Tic Tac Toe Tournament</h1>
+          
+          @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
+            <p class="game-progress">
+              Game <strong>{{ state.currentGame }}</strong> of <strong>{{ state.targetGames }}</strong>
+            </p>
+          }
+        </div>
+        
+        @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
+          <app-scoreboard
+            [player1]="state.player1"
+            [player2]="state.player2"
+            [scores]="state.scores"
+            [currentTurn]="state.currentTurn"
+            [status]="state.status"
+          />
+        }
+      </header>
+
+      @if (state.status === GameStatus.TOURNAMENT_COMPLETE) {
+        <app-tournament-summary
+          [player1]="state.player1"
+          [player2]="state.player2"
+          [scores]="state.scores"
+          [winner]="tournamentWinner$ | async"
+          (playAgain)="restartTournament()"
+        />
+      } @else {
+        <section class="game-card">
+          
+          <div class="status-banner">
+            @if (state.status === GameStatus.IN_PROGRESS) {
+              <h2>Turn: <span class="highlight-turn">{{ activePlayerName$ | async }}</span> ({{ state.currentTurn }})</h2>
+            } @else if (state.status === GameStatus.ROUND_OVER) {
+              <h2>Round Over!</h2>
+            }
+          </div>
+
+          <div class="board-grid">
+            @for (cell of state.board; track $index) {
+              <button
+                type="button"
+                class="board-cell"
+                [class.winning-cell]="state.winningLine?.includes($index)"
+                [disabled]="cell !== null || state.status !== GameStatus.IN_PROGRESS"
+                (click)="makeMove($index)"
+              >
+                @if (cell) {
+                  <span [class.symbol-x]="cell === 'X'" [class.symbol-o]="cell === 'O'">
+                    {{ cell }}
+                  </span>
+                }
+              </button>
+            }
+          </div>
+
+          <div class="game-actions">
+            @if (state.status === GameStatus.ROUND_OVER) {
+              <button class="action-button primary" (click)="nextGame()">
+                Next Round ->
+              </button>
+            }
+          </div>
+
+        </section>
+      }
+
+    </div>
+  }
+</div>
