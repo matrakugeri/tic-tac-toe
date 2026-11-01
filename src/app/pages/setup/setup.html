@@ -14,15 +14,13 @@
         <div class="form-group">
           <label for="player1Name">Player 1 Name</label>
 
-          <div class="input-wrapper" style="position: relative;">
+          <div class="input-wrapper">
             <input
               id="player1Name"
               type="text"
               formControlName="player1Name"
               placeholder="Enter player 1 name"
               autocomplete="off"
-              [class.input-error]="submitted() && setupForm.controls.player1Name.invalid"
-              [attr.aria-invalid]="submitted() && setupForm.controls.player1Name.invalid"
             />
 
             @if (submitted()) {
@@ -49,8 +47,6 @@
               formControlName="player2Name"
               placeholder="Enter player 2 name"
               autocomplete="off"
-              [class.input-error]="submitted() && (setupForm.controls.player2Name.invalid || setupForm.hasError('sameNames'))"
-              [attr.aria-invalid]="submitted() && (setupForm.controls.player2Name.invalid || setupForm.hasError('sameNames'))"
             />
 
             @if (submitted()) {
@@ -126,7 +122,7 @@
         </div>
 
         <div class="submit-section">
-          <button class="start-button" type="submit">
+          <button class="primary-button" type="submit">
             <span class="play-icon" aria-hidden="true">▶</span>
             Start Tournament
           </button>

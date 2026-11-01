@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlayerSymbol, TournamentLength } from '../../core/models/game-model';
 import { uniqueNamesValidator } from '../../utils/game-validators';
-import { GameStateService } from '../../core/services/game-state';
+import { GameStateService } from '../../core/services/game/game-state';
 
 @Component({
   selector: 'app-setup',
