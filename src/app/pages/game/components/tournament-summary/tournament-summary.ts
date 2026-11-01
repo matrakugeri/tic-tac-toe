@@ -26,7 +26,7 @@ import { Scores, Player } from "../../../../core/models/game-model";
         </div>
       </div>
 
-      <button class="action-button primary" (click)="playAgain.emit()">
+      <button class="primary-button" (click)="playAgain.emit()">
         Play Again
       </button>
     </div>
@@ -99,26 +99,6 @@ import { Scores, Player } from "../../../../core/models/game-model";
     }
   }
 
-  .action-button {
-    background-color: var(--primary-color, #3182ce);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius-sm, 8px);
-    padding: 0.85rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    width: 100%;
-
-    &:hover {
-      background-color: var(--primary-hover, #2b6cb0);
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-  }
 }
 @keyframes fadeInScale {
   0% {
