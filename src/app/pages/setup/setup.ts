@@ -1,21 +1,23 @@
-
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PlayerSymbol } from '../../core/game.model';
+import { PlayerSymbol, TournamentLength } from '../../core/models/game-model';
 import { uniqueNamesValidator } from '../../utils/game-validators';
-// import { TicTacToeStore } from '../../core/tic-tac-toe.store';
+import { GameStateService } from '../../core/services/game-state';
 
 @Component({
-  imports: [ReactiveFormsModule],
   selector: 'app-setup',
+  standalone: true,
+  imports: [ReactiveFormsModule],
   styleUrl: './setup.scss',
   templateUrl: './setup.html',
 })
 export class Setup {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
-  // private readonly store = inject(TicTacToeStore);
+  private readonly gameStateService = inject(GameStateService);
+
+  readonly submitted = signal(false);
 
   readonly gameOptions = [1, 3, 5];
 
@@ -24,7 +26,7 @@ export class Setup {
       player1Name: ['', [Validators.required, Validators.minLength(2)]],
       player2Name: ['', [Validators.required, Validators.minLength(2)]],
       player1Symbol: ['X' as PlayerSymbol, Validators.required],
-      totalGames: [3, Validators.required],
+      totalGames: [3 as TournamentLength, Validators.required],
     },
     { validators: [uniqueNamesValidator] },
   );
@@ -38,6 +40,8 @@ export class Setup {
   }
 
   onStartTournament(): void {
+    this.submitted.set(true);
+
     if (this.setupForm.invalid) {
       this.setupForm.markAllAsTouched();
       return;
@@ -46,12 +50,14 @@ export class Setup {
     const { player1Name, player2Name, player1Symbol, totalGames } =
       this.setupForm.getRawValue();
 
-    // this.store.startTournament(
-    //   player1Name.trim(),
-    //   player1Symbol,
-    //   player2Name.trim(),
-    //   totalGames,
-    // );
+    const p1Symbol = player1Symbol as PlayerSymbol;
+    const p2Symbol: PlayerSymbol = p1Symbol === 'X' ? 'O' : 'X';
+
+    this.gameStateService.startTournament(
+      { name: player1Name.trim(), symbol: p1Symbol },
+      { name: player2Name.trim(), symbol: p2Symbol },
+      totalGames as TournamentLength
+    );
 
     this.router.navigate(['/game']);
   }
