@@ -1,0 +1,17 @@
+<div class="board-grid">
+  @for (cell of board(); track $index) {
+    <button
+      type="button"
+      class="board-cell"
+      [class.winning-cell]="winningLine()?.includes($index)"
+      [disabled]="cell !== null || isDisabled()"
+      (click)="cellClicked.emit($index)"
+    >
+      @if (cell) {
+        <span [class.symbol-x]="cell === 'X'" [class.symbol-o]="cell === 'O'">
+          {{ cell }}
+        </span>
+      }
+    </button>
+  }
+</div>

@@ -1,0 +1,50 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1;
+}
+
+.board-cell {
+  @include m.flex-center;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: 44px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  aspect-ratio: 1;
+
+  span {
+    line-height: 1;
+    &.symbol-x { color: var(--color-primary); }
+    &.symbol-o { color: var(--color-secondary); }
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.winning-cell {
+    background: rgba(101, 69, 191, 0.12);
+    border-color: var(--color-primary);
+    animation: pulse 1s infinite alternate;
+  }
+}
