@@ -14,7 +14,6 @@
   gap: 24px;
 }
 
-// Header
 .game-header {
   text-align: center;
 
@@ -36,7 +35,6 @@
   }
 }
 
-// Main Game Card
 .game-card {
   @include m.card;
   padding: 32px;
@@ -70,7 +68,6 @@
   }
 }
 
-// Board Grid (3x3)
 .board-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -113,7 +110,6 @@
   }
 }
 
-// Action Footer Buttons
 .game-actions {
   width: 100%;
   max-width: 340px;
