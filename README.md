@@ -1,59 +1,69 @@
-# TicTacToe
+# Tic Tac Toe Tournament
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.3.
+## Overview
 
-## Development server
+A modern, fully reactive Tic Tac Toe tournament application built with **Angular v22**. The application allows two players to set up custom tournaments, track series scores in real time and experience a real competition.
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **Tournament Management:** Play multi-game series with automatic round transitions, live score updates, and win/draw analytics.
+- **Reactive State Flow:** Fine-grained state updates powered by RxJS streams bridged with Angular Signals.
+- **Guarded Navigation:** Protected routing flow preventing access to active games without setup, or accidental navigation away mid-tournament.
+- **Custom UI Components:** Independent components for Setup, Game Board, Scoreboard, and Tournament Summary with custom SCSS design tokens.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Documentation & Architecture
 
-## Code scaffolding
+### Core Layer (`src/app/core`)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **State & Logic (`services/game/`):** Separated into `game-service.ts` for handling game actions and business logic and `game-state.ts` for managing reactive tournament state.
+- **Data Models (`models/`):** Contains TypeScript definitions and state interfaces (`game-model.ts`) enforcing strict typing throughout the application.
+- **Route Security (`guards/`):** Implements functional Angular guards (`game-guard.ts` and `setup-guard.ts`) to validate tournament setup prior to match entry and protect active session state from unauthorized navigation.
+- **Storage (`storage/`):** Provides a dedicated storage abstraction layer for preserving game settings or history.
 
-```bash
-ng generate component component-name
-```
+### Application Pages & Standalone Components (`src/app/pages`)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Setup Feature (`pages/setup/`):** The main setup page and the `setup-form` component, handling form validation and inputs.
+- **Game Feature (`pages/game/`):** Controls the active tournament lifecycle. Sub-components are divided into clear responsibilities:
+  - **`board`:** Interactive 3x3 grid component responsible for handling move inputs and rendering board tiles.
+  - **`scoreboard`:** Displays current round information, active turn indicators and real-time player scores.
+  - **`tournament-summary`:** Renders final series results, winner announcements and game reset options.
 
-```bash
-ng generate --help
-```
+### Global Styling System (`src/app/styles`)
 
-## Building
+- **`_variables.scss`:** Stores CSS custom properties for application colors, typography, etc.
+- **`_mixins.scss`:** Provides reusable SCSS utility mixins.
+- **`_buttons.scss`:** Button component variants (primary, secondary) used across forms and game action panels.
+- **`_reset.scss`:** Normalizes default browser element styles and rules.
 
-To build the project run:
 
-```bash
-ng build
-```
+## Getting Started
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Prerequisites
 
-## Running unit tests
+Make sure you have the following installed:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- **Node.js** (v22+)
+- **npm**
+- **Angular CLI** (v22)
 
-```bash
-ng test
-```
+### Installation
 
-## Running end-to-end tests
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/matrakugeri/tic-tac-toe.git
+   cd tic-tac-toe
+   ```
 
-For end-to-end (e2e) testing, run:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```bash
-ng e2e
-```
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+4. **Open the application**
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   Navigate to `http://localhost:4200/` in your browser.
