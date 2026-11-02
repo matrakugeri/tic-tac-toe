@@ -27,19 +27,21 @@ export class GameStateService {
   public state$: Observable<GameState> = this.stateSubject.asObservable();
 
   public currentPlayerName$: Observable<string> = this.state$.pipe(
-    map(state => state.currentTurn === state.player1.symbol ? state.player1.name : state.player2.name),
-    distinctUntilChanged()
+    map((state) =>
+      state.currentTurn === state.player1.symbol ? state.player1.name : state.player2.name,
+    ),
+    distinctUntilChanged(),
   );
 
   public tournamentWinner$: Observable<string | null> = this.state$.pipe(
-    map(state => {
+    map((state) => {
       if (state.status !== GameStatus.TOURNAMENT_COMPLETE) return null;
       const { player1, player2 } = state.scores;
       if (player1 > player2) return state.player1.name;
       if (player2 > player1) return state.player2.name;
       return '(Draw)';
     }),
-    distinctUntilChanged()
+    distinctUntilChanged(),
   );
 
   private loadInitialState(): GameState {
@@ -102,7 +104,7 @@ export class GameStateService {
               status: GameStatus.TOURNAMENT_COMPLETE,
             });
           }
-        }, 1800); 
+        }, 1800);
       }
       return;
     }
@@ -158,6 +160,23 @@ export class GameStateService {
       currentTurn: nextStartingTurn,
       status: GameStatus.IN_PROGRESS,
     });
+  }
+
+  playAgainWithSamePlayers(): void {
+    const currentState = this.stateSubject.getValue();
+
+    const newState: GameState = {
+      ...initialState,
+      player1: currentState.player1,
+      player2: currentState.player2,
+      targetGames: currentState.targetGames,
+      currentGame: 1,
+      currentTurn: currentState.player1.symbol,
+      startingTurn: currentState.player1.symbol,
+      status: GameStatus.IN_PROGRESS,
+    };
+
+    this.updateState(newState);
   }
 
   resetTournament(): void {

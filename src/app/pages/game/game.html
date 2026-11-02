@@ -4,7 +4,6 @@
       <header class="game-header">
         <div class="tournament-info">
           <h1>Tic Tac Toe Tournament</h1>
-
           @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
             <p class="game-progress">
               Game <strong>{{ state.currentGame }}</strong> of
@@ -12,7 +11,6 @@
             </p>
           }
         </div>
-
         @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
           <app-scoreboard
             [player1]="state.player1"
@@ -23,15 +21,16 @@
           />
         }
       </header>
-
       @if (state.status === GameStatus.TOURNAMENT_COMPLETE) {
         <app-tournament-summary
           [player1]="state.player1"
           [player2]="state.player2"
           [scores]="state.scores"
           [winner]="tournamentWinner$ | async"
-          (playAgain)="restartTournament()"
+          (setTournament)="restartTournament()"
+          (playAgain)="playAgain()"
         />
+
       } @else {
         <section class="game-card">
           <div class="status-banner">
@@ -57,9 +56,7 @@
             @if (state.status === GameStatus.ROUND_OVER && state.currentGame < state.targetGames) {
               <button class="primary-button" (click)="nextGame()">Next Round -></button>
             }
-            @if (
-              state.status === GameStatus.ROUND_OVER && state.currentGame === state.targetGames
-            ) {
+            @if (state.status === GameStatus.ROUND_OVER && state.currentGame === state.targetGames) {
               <p class="redirect-message">Redirecting to the tournament summary...</p>
             }
           </div>

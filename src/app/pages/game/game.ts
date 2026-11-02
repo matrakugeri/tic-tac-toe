@@ -10,12 +10,7 @@ import { BoardComponent } from './components/board/board';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [
-    CommonModule, 
-    TournamentSummaryComponent, 
-    ScoreboardComponent, 
-    BoardComponent
-  ],
+  imports: [CommonModule, TournamentSummaryComponent, ScoreboardComponent, BoardComponent],
   styleUrl: './game.scss',
   templateUrl: './game.html',
 })
@@ -35,6 +30,10 @@ export class Game {
 
   nextGame(): void {
     this.gameStateService.nextGame();
+  }
+
+  playAgain(): void {
+    this.gameStateService.playAgainWithSamePlayers();
   }
 
   restartTournament(): void {
