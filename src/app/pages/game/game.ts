@@ -40,4 +40,13 @@ export class Game {
     this.gameStateService.resetTournament();
     this.router.navigate(['/setup']);
   }
+
+  quitTournament(): void {
+    const confirmed = window.confirm('Are you sure you want to leave the game?');
+
+    if (confirmed) {
+      this.gameStateService.resetTournament();
+      this.router.navigate(['/']);
+    }
+  }
 }

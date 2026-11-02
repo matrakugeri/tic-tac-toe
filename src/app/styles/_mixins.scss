@@ -5,7 +5,7 @@
 }
 
 @mixin card {
-  background: var(--color-surface);
+  background: var(--color-background);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);

@@ -2,15 +2,20 @@
   @if (state$ | async; as state) {
     <div class="game-container">
       <header class="game-header">
-        <div class="tournament-info">
-          <h1>Tic Tac Toe Tournament</h1>
-          @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
-            <p class="game-progress">
-              Game <strong>{{ state.currentGame }}</strong> of
-              <strong>{{ state.targetGames }}</strong>
-            </p>
-          }
-        </div>
+        @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
+          <div class="tournament-info">
+            <div>
+              <h1>Tic Tac Toe Tournament</h1>
+              <p class="game-progress">
+                Game <strong>{{ state.currentGame }}</strong> of
+                <strong>{{ state.targetGames }}</strong>
+              </p>
+            </div>
+            <button class="quit-button" (click)="quitTournament()">
+              Quit Tournament
+            </button>
+          </div>
+        }
         @if (state.status !== GameStatus.TOURNAMENT_COMPLETE) {
           <app-scoreboard
             [player1]="state.player1"

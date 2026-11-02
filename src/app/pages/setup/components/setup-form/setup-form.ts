@@ -15,6 +15,8 @@ export class SetupFormComponent {
 
   submitted = signal(false);
 
+  readonly gameOptions = [1, 3, 5];
+
   readonly setupForm = this.fb.nonNullable.group(
     {
       player1Name: ['', [Validators.required, Validators.minLength(2)]],

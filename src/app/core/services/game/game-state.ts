@@ -1,9 +1,15 @@
 import { Service, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { GameState, GameStatus, Player, PlayerSymbol, TournamentLength } from '../../models/game-model';
+import {
+  GameState,
+  GameStatus,
+  Player,
+  PlayerSymbol,
+  TournamentLength,
+} from '../../models/game-model';
 import { GameService } from './game-service';
-import { StorageService } from "../storage/storage-service";
+import { StorageService } from '../storage/storage-service';
 
 const initialState: GameState = {
   player1: { name: '', symbol: 'X' },
@@ -39,7 +45,7 @@ export class GameStateService {
       const { player1, player2 } = state.scores;
       if (player1 > player2) return state.player1.name;
       if (player2 > player1) return state.player2.name;
-      return '(Draw)';
+      return 'Draw';
     }),
     distinctUntilChanged(),
   );

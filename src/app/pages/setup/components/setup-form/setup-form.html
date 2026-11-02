@@ -91,7 +91,7 @@
     <label>Number of Games (Best of)</label>
 
     <div class="game-options">
-      @for (count of [1, 3, 5]; track count) {
+      @for (count of gameOptions; track count) {
         <label
           class="game-option"
           [class.selected]="setupForm.controls.totalGames.value === count"
@@ -109,7 +109,7 @@
 
   <div class="submit-section">
     <button class="primary-button" type="submit">
-      <span class="play-icon" aria-hidden="true">▶</span>
+      <span class="play-icon">▶</span>
       Start Tournament
     </button>
   </div>

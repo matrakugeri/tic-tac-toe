@@ -7,7 +7,7 @@ import { SetupFormComponent } from './components/setup-form/setup-form';
 @Component({
   selector: 'app-setup',
   standalone: true,
-  imports: [SetupFormComponent, SetupFormComponent],
+  imports: [SetupFormComponent],
   styleUrl: './setup.scss',
   templateUrl: './setup.html',
 })

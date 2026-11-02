@@ -13,7 +13,8 @@ export const setupGuard: CanActivateFn = () => {
     map((gameState) => {
       if (
         gameState.status === GameStatus.IN_PROGRESS ||
-        gameState.status === GameStatus.TOURNAMENT_COMPLETE
+        gameState.status === GameStatus.TOURNAMENT_COMPLETE ||
+        gameState.status === GameStatus.ROUND_OVER
       ) {
         return router.createUrlTree(['/game']);
       }

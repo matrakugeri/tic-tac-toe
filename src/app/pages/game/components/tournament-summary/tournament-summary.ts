@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Scores, Player } from '../../../../core/models/game-model';
 
@@ -10,12 +10,16 @@ import { Scores, Player } from '../../../../core/models/game-model';
     <div class="summary-card">
       <h2>Tournament Results</h2>
       <p class="winner-announcement">
-        Winner: <strong>{{ winner() }}</strong>
+        @if (isTournamentDraw()) {
+          <strong>It's a Draw!</strong>
+        } @else {
+          Winner: {{ winner() }}
+        }
       </p>
       <div class="final-stats">
         <div class="stat-box">
           <span>{{ player1().name }} ({{ player1().symbol }})</span>
-          <strong>{{ scores().player1 }} Wins</strong>
+          <strong>{{ scores().player1 }} {{ scores().player1 === 1 ? 'Win' : 'Wins' }}</strong>
         </div>
         <div class="stat-box">
           <span>Draws</span>
@@ -23,23 +27,25 @@ import { Scores, Player } from '../../../../core/models/game-model';
         </div>
         <div class="stat-box">
           <span>{{ player2().name }} ({{ player2().symbol }})</span>
-          <strong>{{ scores().player2 }} Wins</strong>
+          <strong>{{ scores().player2 }} {{ scores().player2 === 1 ? 'Win' : 'Wins' }}</strong>
         </div>
       </div>
 
       <div class="tournament-actions">
-        <button class="primary-button" (click)="setTournament.emit()">Set new tournament</button>
+        <button class="secondary-button" (click)="setTournament.emit()">Set new tournament</button>
         <button class="primary-button" (click)="playAgain.emit()">Play Again</button>
       </div>
     </div>
   `,
   styles: [
     `
+      @use 'mixins' as m;
+
       .summary-card {
-        background: var(--card-background, #ffffff);
-        border-radius: var(--border-radius-lg, 16px);
+        background: var(--color-background);
+        border-radius: var(--radius-lg);
         padding: 2.5rem;
-        box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.08));
+        box-shadow: var(--shadow-card-lg);
         max-width: 480px;
         width: 100%;
         margin: 2rem auto;
@@ -52,29 +58,22 @@ import { Scores, Player } from '../../../../core/models/game-model';
         h2 {
           font-size: 1.75rem;
           font-weight: 700;
-          color: var(--text-primary, #1a1a1a);
+          color: var(--color-text);
           margin: 0;
         }
 
         .winner-announcement {
           font-size: 1.1rem;
-          color: var(--text-secondary, #4a5568);
-          background: var(--bg-secondary, #f7fafc);
+          color: var(--color-primary);
+          background: var(--color-background-secondary);
           padding: 0.75rem 1rem;
-          border-radius: var(--border-radius-sm, 8px);
+          border-radius: var(--radius-sm);
           margin: 0;
-
-          strong {
-            color: var(--primary-color, #2b6cb0);
-            font-weight: 600;
-          }
         }
 
         .tournament-actions {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
+          @include m.flex-center;
+          gap: 8px;
         }
 
         .final-stats {
@@ -84,9 +83,9 @@ import { Scores, Player } from '../../../../core/models/game-model';
           margin: 1rem 0;
 
           .stat-box {
-            background: var(--bg-secondary, #f8fafc);
-            border: 1px solid var(--border-color, #e2e8f0);
-            border-radius: var(--border-radius-md, 12px);
+            background: var(--color-background-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg, 12px);
             padding: 1rem 0.5rem;
             display: flex;
             flex-direction: column;
@@ -94,17 +93,11 @@ import { Scores, Player } from '../../../../core/models/game-model';
 
             span {
               font-size: 0.85rem;
-              color: var(--text-muted, #718096);
+              color: var(--color-text-secondary, #718096);
               font-weight: 500;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-            }
-
-            strong {
-              font-size: 1.25rem;
-              color: var(--text-primary, #2d3748);
-              font-weight: 700;
             }
           }
         }
@@ -131,4 +124,6 @@ export class TournamentSummaryComponent {
 
   setTournament = output<void>();
   playAgain = output<void>();
+
+  readonly isTournamentDraw = computed(() => this.winner() === 'Draw');
 }

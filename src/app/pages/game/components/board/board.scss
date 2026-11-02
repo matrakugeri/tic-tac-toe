@@ -1,7 +1,6 @@
 @use 'mixins' as m;
 
 :host {
-  display: block;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -18,7 +17,7 @@
 
 .board-cell {
   @include m.flex-center;
-  background: var(--color-surface);
+  background: var(--color-background);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
   font-size: 44px;
@@ -29,8 +28,14 @@
 
   span {
     line-height: 1;
-    &.symbol-x { color: var(--color-primary); }
-    &.symbol-o { color: var(--color-secondary); }
+
+    &.symbol-x {
+      color: var(--color-primary);
+    }
+
+    &.symbol-o {
+      color: var(--color-secondary);
+    }
   }
 
   &:hover:not(:disabled) {
