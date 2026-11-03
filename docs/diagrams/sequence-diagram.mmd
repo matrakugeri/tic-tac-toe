@@ -1,0 +1,43 @@
+sequenceDiagram
+    autonumber
+
+    actor Player
+    participant Board as BoardComponent
+    participant Game as GameComponent
+    participant State as GameStateService
+    participant Rules as GameService
+    participant Storage as StorageService
+
+    Player->>Board: Click cell
+    Board->>Game: cellClicked(index)
+    Game->>State: makeMove(index)
+
+    State->>State: Validate move
+
+    alt Invalid move
+        State-->>Game: No state change
+    else Valid move
+        State->>State: Update board
+        State->>Rules: checkWin(board)
+        Rules-->>State: Winning line or null
+
+        opt No winner
+            State->>Rules: checkDraw(board)
+            Rules-->>State: Draw result
+        end
+
+        alt Winner found
+            State->>State: Update winner score
+            State->>State: Set ROUND_OVER
+        else Draw
+            State->>State: Increase draws
+            State->>State: Set ROUND_OVER
+        else Game continues
+            State->>State: Switch current player
+        end
+
+        State->>State: Emit updated state
+        State->>Storage: saveState(newState)
+        State-->>Game: State observable emits
+        Game-->>Board: Render updated board
+    end
