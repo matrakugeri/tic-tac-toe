@@ -67,3 +67,13 @@ Make sure you have the following installed:
 4. **Open the application**
 
    Navigate to `http://localhost:4200/` in your browser.
+
+# Architecture & UML Diagrams
+
+### Dependency Graph
+
+![Dependency Graph](docs/diagrams/dependency-graph.svg)
+
+### Sequence Diagram
+
+![Sequence Diagram](docs/diagrams/sequence-diagram.svg)
