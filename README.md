@@ -81,31 +81,32 @@ Make sure you have the following installed:
 
 ## Documentation
 
-### Generate Documentation
+1. **Generate documentation**
 
-```bash
-npm run compodoc
-```
+   ```bash
+   npm run compodoc
+   ```
 
-### Serve Documentation
+2. **Serve documentation**
 
-```bash
-npm run compodoc:serve
-```
+   ```bash
+   npm run compodoc:serve
+   ```
 
-Open your browser and navigate to http://localhost:8080 to view the documentation.
+3. **Open documentation**
+
+Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Application Screenshots
 
 ### Tournament Setup
 
-![Tournament Setup](docs/images/Tournament Setup.png)
+![Tournament Setup](docs/images/Tournament%20Setup.png)
 
 ### Gameplay
 
-![Gameplay](docs/images/Tournament In Progress.png)
+![Gameplay](docs/images/Tournament%20In%20Progress.png)
 
 ### Tournament Summary
 
-![Tournament Summary](docs/images/Tournament Completed.png)
-
+![Tournament Summary](docs/images/Tournament%20Completed.png)
