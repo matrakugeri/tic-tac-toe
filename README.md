@@ -77,3 +77,35 @@ Make sure you have the following installed:
 ### Sequence Diagram
 
 ![Sequence Diagram](docs/diagrams/sequence-diagram.svg)
+
+
+## Documentation
+
+### Generate Documentation
+
+```bash
+npm run compodoc
+```
+
+### Serve Documentation
+
+```bash
+npm run compodoc:serve
+```
+
+Open your browser and navigate to http://localhost:8080 to view the documentation.
+
+## Application Screenshots
+
+### Tournament Setup
+
+![Tournament Setup](docs/images/Tournament Setup.png)
+
+### Gameplay
+
+![Gameplay](docs/images/Tournament In Progress.png)
+
+### Tournament Summary
+
+![Tournament Summary](docs/images/Tournament Completed.png)
+
